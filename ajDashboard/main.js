@@ -69,7 +69,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
         var _this = this;
-        this.activeComponent = 'filter';
+        // activeComponent = 'filter';
+        this.activeComponent = 'slideshow';
         if (window.initWidget) {
             this.activeComponent = window.initWidget;
         }
@@ -572,16 +573,16 @@ var SlideshowGeneratorComponent = /** @class */ (function () {
         var uploadData = new FormData();
         this.imageUploading = true;
         this.imageUploadError = '';
-        uploadData.append('fileToUpload', file, file.name);
-        this.http.post('https://appjustable.com/weebly/artem/upload/index.php', uploadData, {
+        uploadData.append('image', file, file.name);
+        this.http.post('https://www.appjustable.com/weebly/apps/apppack/uploads/handler.php', uploadData, {
             reportProgress: true,
             observe: 'events'
         }).subscribe(function (res) {
             console.log(res); // handle event here
             if (res.type === 4) {
                 _this.imageUploading = false;
-                if (res && res.body && res.body.res) {
-                    slide.bgImage = 'https://appjustable.com/weebly/artem/upload/images/' + res.body.res;
+                if (res && res.body && res.body.result) {
+                    slide.bgImage = res.body.image.Location;
                     console.log('slide', slide);
                 }
                 else {
